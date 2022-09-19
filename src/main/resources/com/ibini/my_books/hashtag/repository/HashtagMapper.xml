@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ibini.my_books.hashtag.repository.HashtagMapper">
+
+    <resultMap id="hashtagMap" type="com.ibini.my_books.hashtag.domain.HashtagDomain">
+        <result property="tagNo" column="tag_no"/>
+        <result property="postNo" column="post_no"/>
+        <result property="tagName" column="tag_name"/>
+        <result property="account" column="account"/>
+    </resultMap>
+
+    <resultMap id="hashtagDtoMap" type="com.ibini.my_books.hashtag.dto.HashtagDto">
+        <result property="tagNo" column="tag_no"/>
+        <result property="postNo" column="post_no"/>
+        <result property="tagName" column="tag_name"/>
+        <result property="account" column="account"/>
+        <result property="postTitle" column="post_title" />
+        <result property="postWriter" column="post_writer" />
+        <result property="platformName" column="platform_name" />
+    </resultMap>
+
+    <!--    저장 -->
+    <insert id="saveHashtag">
+        INSERT INTO prj_hashtag
+            (
+            tag_no,
+             post_no,
+             tag_name, account )
+        VALUES
+            (
+            NEXTVAL(seq_prj_hashtag),
+            <choose>
+                <when test="postNo != null">
+                    #{postNo},
+                </when>
+                <otherwise>
+                    LAST_INSERT_ID(),
+                </otherwise>
+            </choose>
+            #{tagName}, #{account}
+            )
+    </insert>
+
+
+    <!--    삭제-->
+    <delete id="deleteHashtag">
+        DELETE FROM prj_hashtag
+        WHERE tag_no = #{tagNo}
+        AND account = #{account}
+    </delete>
+
+    <!--    수정-->
+    <update id="modifyHashtag">
+        UPDATE prj_hashtag
+        SET tag_name = #{tagName}
+        WHERE tag_no = #{tagNo}
+    </update>
+
+
+
+
+<!--    태그 이름으로 조회 -->
+    <select id="findOnlyHashtag" resultMap="hashtagMap">
+        SELECT * FROM prj_hashtag
+        WHERE tag_name = #{tagName}
+        AND account = #{account}
+    </select>
+
+    <select id="findTagName" resultMap="hashtagDtoMap">
+        SELECT
+        H.post_no
+        , A.post_title
+        , A.post_writer
+        , P.platform_name
+        , H.tag_name
+        , H.account
+        FROM tbl_post A
+        , prj_hashtag H
+        , prj_platform P
+        Where A.post_no = h.post_no
+        and a.platform_id = p.platform_id
+        and H.account = #{account}
+        and h.tag_name = #{tagName}
+        ORDER BY post_no
+    </select>
+
+<!--    total tag -->
+    <select id="totalTag" resultType="integer">
+        SELECT COUNT(*) FROM prj_hashtag
+        WHERE account = #{account}
+    </select>
+
+    <!--    선택된 tag -->
+    <select id="totalTagName" resultType="integer">
+        SELECT COUNT(*) FROM prj_hashtag
+        WHERE tag_name= #{tagName}
+        and account = #{account}
+    </select>
+
+
+
+
+    <!--    태그 조회 -->
+    <select id="findOneTag" resultMap="hashtagMap">
+        SELECT * FROM prj_hashtag
+        WHERE tag_no = #{tagNo}
+        AND account = #{account}
+    </select>
+
+
+
+    <!--    해시태그 전체 조회 (계정정보)-->
+    <select id="findAllHashTag" resultMap="hashtagMap">
+        SELECT * FROM prj_hashtag
+        WHERE account = #{account}
+        ORDER BY tag_no
+    </select>
+
+    <!-- 게시글로 하나에 달린 태그 조회하기 -->
+    <select id="findOneHashtag" resultMap="hashtagMap">
+        SELECT * FROM prj_hashtag
+        WHERE post_no = #{postNo}
+        AND tag_no = #{tagNo}
+    </select>
+
+    <!-- 한 포스트에 달린 해시태그 전체 조회  -->
+    <select id="findAllHashTagByPostNo" resultMap="hashtagMap">
+        SELECT * FROM prj_hashtag
+        WHERE post_no = #{postNo}
+    </select>
+
+<!--    한 포스트에 달린 해시태그 전부 삭제-->
+<!--    boolean removeTagOnPost(Long postNo);-->
+    <delete id="removeTagOnPost">
+        DELETE FROM prj_hashtag
+        WHERE post_no = #{postNo}
+    </delete>
+
+</mapper>

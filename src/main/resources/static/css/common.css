@@ -1,0 +1,155 @@
+/* reset */
+a {
+    color: inherit;
+    text-decoration: none !important;
+    cursor: pointer;
+}
+
+button,
+input {
+    background-color: inherit;
+    border: none;
+}
+
+ul{
+    margin: 0;
+    padding: 0;
+}
+
+/* common style */
+
+
+@font-face {
+    font-family: 'NanumSquareRound';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+#wrap {
+    font-size: 18px;
+    width: 1000px;
+    margin: 0 auto;
+    color: inherit;
+    font-family: 'NanumSquareRound', sans-serif;
+}
+
+.hide {
+    display: none !important;
+}
+
+
+
+/* jsp불러올때 #header-wrap으로 감싸기 */
+#header-wrap{
+    width: 100%;
+    /* background: #000; */
+}
+
+
+/* 헤더 */
+header{
+    width: inherit;
+    top: 0;
+    z-index: 1000;
+}
+
+header #header-container{
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+header #inner-header {
+    /* background-color: yellow; */
+    padding: 20px 10px 10px 10px;
+    width: 100%;
+    padding-left: 30px;
+    border-bottom: 5px double #ffca3d;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+
+    position: relative;
+}
+
+header #header-container #inner-header h1 {
+    /*height: 80px;*/
+    width: 150px;
+}
+
+
+header #header-container #inner-header h1 img{
+    max-width: 100%;
+    max-height: 100%;
+    /*padding: 10px;*/
+}
+
+
+header #header-container #inner-header .menuBtn {
+    width: 70px;
+    padding: 20px;
+}
+
+.fa-bars{
+    margin-left: 5px;
+}
+
+
+header #inner-header .menu-open{
+    font-size: 1.3em;
+}
+
+
+header.on {
+    background: #222;
+    border-bottom: 1px solid #2c2c2c;
+    transition: .4s;
+}
+
+/* 헤더 메뉴 */
+header .gnb {
+    font-family: 'NanumBarunGothicBold';
+    background-color: #ffca3d;
+    border-radius: 0.25rem;
+    font-size: 1.3em;
+    color: #666;
+    padding: 10px;
+    display: none;
+    /* height: 100vh; */
+
+    position: absolute;
+    top: 200px;
+    right: 10%;
+}
+header .gnb.on{
+    display: inline-block;
+}
+
+header .gnb .menu-close{
+    text-align: right;
+
+    display: flex;
+    justify-content: end;
+
+}
+
+header .gnb li{
+    margin: 10px 30px;
+}
+
+
+/* 섹션 틀 */
+section {
+    width: 90%;
+    border: 1px solid #adb5bd;
+    border-radius: 0.25rem;
+    margin: 10px auto 0;
+    padding: 30px;
+    box-sizing: border-box;
+}
+
+#content-wrap {
+    margin-top: 100px;
+}

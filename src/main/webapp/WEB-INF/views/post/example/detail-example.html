@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ibini books</title>
+
+    <!-- reset css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+
+    <!-- fontawesome css: https://fontawesome.com -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+
+    <!-- linear icons -->
+    <!-- https://linearicons.com/free#cdn -->
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+
+    <!-- naver font -->
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css" rel="stylesheet">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css" rel="stylesheet">
+
+
+
+    <!-- slick css || https://kenwheeler.github.io/slick/  -->
+    <link rel="stylesheet" href="/main/resources/static/css/slick-1.8.1.css">
+
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="/main/resources/static/css/common.css">
+    <link rel="stylesheet" href="/main/resources/static/css/post-detail.css">
+
+
+
+    <!-- jquery -->
+    <script src="/main/resources/static/js/jquery-3.3.1.min.js"></script>
+
+
+
+    <!-- libraries -->
+    <!-- slick js -->
+    <script src="/main/resources/static/js/slick-1.8.1.min.js" defer></script>
+
+    <!-- bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
+
+    <!-- custom js -->
+    <script src="/main/resources/static/js/common.js" defer></script>
+
+
+
+</head>
+
+<body>
+
+
+    <div id="wrap">
+        <!-- header -->
+        <header>
+            <div id="header-container">
+                <div id="inner-header">
+
+                    <h1><img src="/main/resources/static/img/ibini_logo_4.png" alt=""></h1>
+
+                    <a href="#" class="menu-open">
+                        <span class="user-name">이비니 님</span>
+                        <span class="fas fa-bars"></span>
+                    </a>
+
+                </div> <!-- // end inner-header -->
+            </div> <!-- // end header-container -->
+        </header> <!-- end header -->
+
+        <div id="content-wrap">
+            <section>
+                <div class="inner-section">
+
+                    <!-- 이미지 모달 -->
+                    <div id="imgModal" class="modal">
+                        <span class="close">&times;</span>
+                        <img class="modal-content" id="modalImgNode">
+                    </div>
+
+                    <!-- 이미지, 포스트 정보 영역 -->
+                    <div id="img-post-wrap">
+                        <!-- 이미지 영역 -->
+                        <div id="img-wrap">
+                            <!-- 썸네일 이미지 -->
+                            <div id="thumb-img">
+                                <img class="post-img"
+                                    src="/main/resources/static/img/ppp111.png"
+                                    alt="썸네일 이미지">
+                            </div>
+
+                            <!-- 첨부 이미지 목록 -->
+                            <div class="img-box-wrap">
+                                <div class="img-box">
+                                    <img class="post-img"
+                                        src="https://pbs.twimg.com/media/Fb8vCzEaQAAZHt9?format=jpg&name=medium" alt="">
+                                </div>
+                                <div class="img-box">
+                                    <img class="post-img"
+                                        src="https://pbs.twimg.com/media/Fb8vCzDaQAEW6g1?format=jpg&name=900x900"
+                                        alt="">
+                                </div>
+                                <div class="img-box">
+                                    <img class="post-img"
+                                        src="https://pbs.twimg.com/media/FaVPI-LVEAAoybZ?format=jpg&name=large" alt="">
+                                </div>
+                                <div class="img-box">
+                                    <img class="post-img"
+                                        src="https://pbs.twimg.com/media/FaVPI-LVEAAoybZ?format=jpg&name=large" alt="">
+                                </div>
+                                <div class="img-box">
+                                    <img class="post-img"
+                                        src="https://pbs.twimg.com/media/FaVPI-LVEAAoybZ?format=jpg&name=large" alt="">
+                                </div>
+                            </div>
+                        </div> <!-- // end img-wrap -->
+
+                        <!-- 포스트 정보 영역 -->
+                        <div id="post-box">
+
+                            <!-- top : 별점, 제목, 작가-->
+                            <div id="post-top">
+                                <span class="star-span">⭐⭐⭐</span>
+                                <!-- 책 제목 -->
+                                <div id="post-title">
+                                    <h2 class="title-span">어두운 바다의 등불이 되어</h2>
+                                </div>
+                                <!-- 작가 이름-->
+                                <div id="post-writer">
+                                    <span class="writer-span">연산호</span>
+                                </div>
+                            </div> <!-- // end post-top -->
+
+                            <!-- middle : 장르, 플랫폼, 연재 상태, 연재 일시, 페이지 정보 -->
+                            <div id="post-middle">
+                                <!-- 연재 상태 / 연재 일시 -->
+                                <div class="m-tr tr-down colspan-2">매월 10일</div>
+
+                                <div class="m-tr tr-down">
+                                    <!-- 플랫폼 -->
+                                    <div class="l-td plat-span"><span>네이버시리즈</span></div>
+                                    <!-- 장르 -->
+                                    <div class="r-td genre-span"><span>SF스릴러</span></div>
+                                </div>
+
+                                <div class="m-tr">
+                                    <div class="l-td">현재 페이지</div>
+                                    <div class="r-td">전체 페이지</div>
+                                </div>
+
+                                <div class="m-tr tr-down">
+                                    <div class="l-td">300p</div>
+                                    <div class="r-td">500p</div>
+                                </div>
+                            </div> <!-- // end post-middle -->
+                        </div> <!-- // end post-box -->
+                    </div><!-- // end img-post-wrap -->
+                    <!-- bottom : 날짜, 수정삭제목록 버튼-->
+                    <div id="post-bottom">
+                        <div class="date-wrap">
+                            <span>등록일 2022.02.02</span>
+                            |
+                            <span>수정일 2022.08.08</span>
+                        </div>
+                        <div class="post-btn-wrap">
+                            <button class="post-btn post-modi-btn" title="수정하기">
+                                <i class="fas fa-pencil-alt"></i>
+                            </button>
+                            <button class="post-btn post-list-btn" title="목록으로">
+                                <i class="far fa-list-alt"></i>
+                            </button>
+                            <button class="post-btn post-del-btn" title="삭제하기">
+                                <i class="far fa-trash-alt"></i>
+                            </button>
+                        </div>
+                    </div> <!-- // end post-bottom -->
+
+                    <!-- 리모컨, 해시태그, 관련 링크 영역-->
+                    <div id="remote-etc-wrap">
+                        <!-- 사이드 리모컨 영역 -->
+                        <div id="remote-controller">
+                            <div id="inner-remote">
+                                리모컨
+                                <div id="go-to-controller">
+                                    <!-- <select>
+                                <option value="">최상단</option>
+                                <option value="">해시태그</option>
+                                <option value="">관련 포스트</option>
+                                <option value="">포스트 노트</option>
+                                <option value="">최하단</option>
+                                <option value="">포스트 목록</option>
+                                <option value="">마이페이지</option>
+                            </select> -->
+                                    <button>이동</button>
+                                </div>
+
+                                <div id="search-controller">
+                                    <!-- <input type="text" name="" id=""> -->
+                                    <button>검색</button>
+                                </div>
+                            </div> <!-- // end inner-remote -->
+                        </div> <!-- // end remote-conroller -->
+
+                        <div id="etc-wrap">
+
+                            <!-- 해시태그 영역 -->
+                            <div id="hash-wrap">
+
+                                <div class="h3-wrap">
+                                    <h3>해시태그</h3>
+                                    <div class="toggle-box">
+                                        <i class="fas fa-lock i-lock-close" title="편집모드 잠김"></i>
+                                        <i class="fas fa-toggle-off i-toggle-off" title="편집모드 열기"></i>
+                                        <i class="fas fa-toggle-on i-toggle-on hide" title="편집모드 닫기"></i>
+                                        <i class="fas fa-lock-open i-lock-close fff" title="편집모드 열림"></i>
+                                    </div>
+                                </div>
+
+                                <div id="tag-container">
+                                    <span class="hash-span">태그1</span>
+                                    <span class="hash-span">태그태그태그</span>
+                                    <span class="hash-span">태그_테스트</span>
+                                    <span class="hash-span">태그2</span>
+                                    <span class="hash-span">태그_3</span>
+                                    <span class="hash-span">태그태그</span>
+                                    <span class="hash-span">태그_중</span>
+                                    <span class="hash-span">태그</span>
+                                    <span class="hash-span">태그_태그_태그</span>
+                                    <span class="hash-span">태그_뾰잉뾰이이이잉</span>
+                                    <span class="hash-span tag-plus hide">
+                                        <i class="far fa-plus-square"></i>
+                                    </span>
+                                </div>
+                            </div> <!-- // end hash-wrap -->
+
+                            <!-- 연관 포스트 영역 -->
+                            <div id="link-post-wrap">
+                                <div class="h3-wrap">
+                                    <h3>연관 포스트</h3>
+                                    <div class="toggle-box">
+                                        <i class="fas fa-lock i-lock-close" title="편집모드 잠김"></i>
+                                        <i class="fas fa-toggle-off i-toggle-off" title="편집모드 열기"></i>
+                                        <i class="fas fa-toggle-on i-toggle-on hide" title="편집모드 닫기"></i>
+                                        <i class="fas fa-lock-open i-lock-close fff" title="편집모드 열림"></i>
+                                    </div>
+                                </div>
+
+
+                                <div>
+                                    <ul id="link-container">
+
+                                        <!-- 포스트 검색 영역 ( + 연관 포스트가 없을 때)-->
+                                        <li class="link-zero-box">
+                                            <div class="search-msg">연관 포스트를 추가해 보세요. <br> 바로가기 링크가 생깁니다.</div>
+
+                                            <div class="search-wrap">
+                                                <!-- 검색 유형 선택 -->
+                                                <select class="form-select" id="linkSearchType">
+                                                    <option value="sTitle" selected>제목</option>
+                                                    <option value="sWriter">작가</option>
+                                                </select>
+                                                <!-- 포스트 검색, 추가 -->
+                                                <input class="form-control" list="datalistOptions" id="postSearchList"
+                                                    placeholder="포스트 제목 검색">
+                                                <datalist id="datalistOptions">
+                                                    <option data-link-post-no="30" value="화산귀환 1권"> 네이버시리즈 | 비가
+                                                    <option data-link-post-no="31" value="화산귀환 2권"> 네이버시리즈 | 비가
+                                                    <option data-link-post-no="32" value="화산귀환 3권"> 네이버시리즈 | 비가
+                                                    <option data-link-post-no="33" value="내가 키운 S급들 1권"> 리디북스 | 근서
+                                                    <option data-link-post-no="34" value="내가 키운 S급들 2권"> 리디북스 | 근서
+                                                </datalist>
+                                                <!-- 등록버튼 -->
+                                                <button type="button" class="link-reg-btn btn btn-secondary">저장</button>
+                                            </div> <!-- // end search wrap -->
+                                        </li>
+
+
+                                        <!-- 연결된 포스트가 있는 경우 -->
+                                        <li>
+                                            <a class="link-a" href="/post/detail/1">
+                                                <!-- 진행도 배경색과 글자색에 플랫폼 색깔 넣기 -->
+                                                <div class="link-percent" style="background-color: #000; color:#fff">
+                                                    100%</div>
+
+                                                <div class="link-post-info">
+                                                    <div class="link-title">신기방기 뿡뿡방기 제목이 어디까지 어디까지 늘어나는 거에요?</div>
+                                                    <div class="link-writer">윤정한 | 카카오페이지 - 월, 금 10시
+                                                    </div>
+                                                </div>
+
+                                                <div class="link-post-date">
+                                                    <span class="link-date">수정일</span>
+                                                    <span class="link-date">2022.05.05</span>
+                                                </div>
+                                                <i data-del-post-no="98"
+                                                    class="fas fa-times-circle link-remove-btn hide"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+
+                            </div> <!-- // end post-link-wrap -->
+                        </div><!-- // end etc-wrap -->
+
+
+                    </div> <!-- // end remote-etc-wrap -->
+
+                    <!-- 포스트 노트 영역 -->
+
+
+                </div> <!-- // end inner-section -->
+            </section> <!-- // end section -->
+        </div>
+
+
+    </div> <!-- end wrap -->
+
+
+    <script src="/main/resources/static/js/post-detail.js"></script>
+    <script>
+        // start jQuery
+        $(document).ready(function () {
+            // jQueryTagTest("태그 잡기 테스트", $('h1'));
+            const postNo = 5;
+
+            // 포스트 수정, 삭제, 목록 버튼 이벤트
+            $('.post-btn-wrap').click(function (e) {
+                clickPostBtn(e.target, postNo)
+            })
+
+            /* ------------------ 연관 포스트 -------------------------- */
+
+            function setLinkEditMod() {
+                switchToggle($postToggles); // 아이콘 바꾸기
+                $('.search-wrap').toggleClass('hide') // 검색창 표시
+                const $removeBtnList = $('.link-remove-btn');
+                for (let $btn of $removeBtnList) {
+                    $btn.classList.toggle('hide')
+                }
+            }
+
+            // 연관 포스트 편집모드 열기(등록, 삭제)
+            const $postToggles = $('#link-post-wrap .toggle-box').children();
+            $postToggles[1].onclick = setLinkEditMod;
+            // 연관 포스트 편집모드 닫기
+            $postToggles[2].onclick = setLinkEditMod;
+
+
+            // 연관 포스트 등록 요청 보내기
+            $('#search-plus').click(function () {
+                console.log(postNo);
+
+                let linkPostNo = -1;
+                // input 입력값을 -> data-link-post-no 값으로 바꾸기
+                const inputValue = $('#linkTitle').val();
+                console.log(inputValue);
+                const $options = $('datalist[id=titleOptionList]').children()
+                for (let i = 0; i < $options.length; i++) {
+                    if (inputValue === $options[i].value) {
+                        linkPostNo = $options[i].dataset.linkPostNo
+                        console.log(linkPostNo);
+                        break;
+                    }
+                }
+                if (linkPostNo === -1) {
+                    alert("검색 포스트가 없습니다.");
+                    return;
+                }
+            });
+
+
+            $('#link-container').click(function (e) {
+                e.preventDefault();
+                // 연관 포스트 삭제 요청 보내기
+                if (e.target.matches('.link-remove-btn')) {
+                    console.log("root post no : " + postNo);
+                    console.log("link post no : " + e.target.dataset.delPostNo);
+                }
+
+            });
+
+
+            /* ------------------ // end 연관 포스트 -------------------------- */
+
+            // -------------------------- 이미지 모달 관련 함수 --------------------------- //
+            // 이미지 박스 노드
+            const $imgWrap = document.getElementById('img-wrap');
+            // 모달 노드
+            const $modal = document.getElementById("imgModal");
+            const $modalImg = document.getElementById("modalImgNode");
+
+            $imgWrap.onclick = function (e) {
+                if (!e.target.matches('.post-img')) {
+                    return;
+                }
+                // 클릭한 이미지의 src를 모달 img src에 넣기
+                $modal.style.display = "block";
+                $modalImg.src = e.target.getAttribute('src');
+            }
+
+            // 모달 지우기
+            const $close = document.querySelector(".close");
+            $close.onclick = function () {
+                $modal.style.display = "none";
+            }
+
+
+        });
+        // end jQuery
+    </script>
+
+
+</body>
+
+</html>

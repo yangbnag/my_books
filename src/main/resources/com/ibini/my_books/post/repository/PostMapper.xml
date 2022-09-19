@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ibini.my_books.post.repository.PostMapper">
+
+    <resultMap id="postMap" type="com.ibini.my_books.post.domain.Post">
+        <result property="postNo" column="post_no"/>
+        <result property="genreId" column="genre_id"/>
+        <result property="caId" column="ca_id"/>
+        <result property="platformId" column="platform_id"/>
+        <result property="postTitle" column="post_title"/>
+        <result property="postWriter" column="post_writer"/>
+        <result property="publishStatus" column="publish_status"/>
+        <result property="publishCycle" column="publish_cycle"/>
+        <result property="epId" column="ep_id"/>
+        <result property="curEp" column="cur_ep"/>
+        <result property="totalEp" column="total_ep"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="starRate" column="star_rate"/>
+    </resultMap>
+
+    <resultMap id="postWithNameMap" type="com.ibini.my_books.post.dto.PostWithName">
+        <result property="postNo" column="post_no"/>
+        <result property="genreId" column="genre_id"/>
+        <result property="caId" column="ca_id"/>
+        <result property="platformId" column="platform_id"/>
+        <result property="postTitle" column="post_title"/>
+        <result property="postWriter" column="post_writer"/>
+        <result property="publishStatus" column="publish_status"/>
+        <result property="publishCycle" column="publish_cycle"/>
+        <result property="epId" column="ep_id"/>
+        <result property="curEp" column="cur_ep"/>
+        <result property="totalEp" column="total_ep"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="starRate" column="star_rate"/>
+
+        <result property="genreName" column="genre_name"/>
+
+        <result property="platformName" column="platform_name"/>
+        <result property="platformBgColor" column="platform_bg_color"/>
+        <result property="platformFontColor" column="platform_font_color"/>
+
+        <result property="thumbImg" column="file_name"/>
+        <result property="originalThumbName" column="ORIGINAL_FILE_NAME"/>
+    </resultMap>
+
+    <insert id="save">
+        insert into tbl_post
+        (
+        account, genre_id, ca_id, platform_id,
+        post_title, post_writer, publish_status,
+        publish_cycle, ep_id, cur_ep, total_ep,
+        star_rate, favorite
+        )
+        VALUES
+        (
+        #{account}, #{genreId}, #{caId}, #{platformId},
+        #{postTitle}, #{postWriter}, #{publishStatus},
+        #{publishCycle}, #{epId}, #{curEp}, #{totalEp},
+        #{starRate}, #{favorite}
+        )
+    </insert>
+
+    <select id="findAllPost" resultMap="postMap">
+        SELECT
+        post_no, account, genre_id, ca_id, platform_id,
+        post_title, post_writer, publish_status, publish_cycle,
+        ep_id, cur_ep, total_ep, reg_date, update_date, star_rate, favorite
+        FROM tbl_post
+        WHERE account = #{account}
+        ORDER BY post_no desc
+    </select>
+
+    <select id="findAllPostWithName" resultMap="postWithNameMap">
+        SELECT
+        p.post_no, p.account, p.genre_id, g.genre_name,
+        p.ca_id, p.platform_id, pf.platform_name, pf.platform_bg_color, pf.platform_font_color,
+        p.post_title, p.post_writer, p.publish_status, p.publish_cycle,
+        p.ep_id, p.cur_ep, p.total_ep, p.reg_date, p.update_date, p.star_rate
+        ,pi.file_name ,pi.ORIGINAL_FILE_NAME, p.favorite
+
+        FROM (select * from tbl_post WHERE account = #{account})p
+
+        LEFT OUTER JOIN prj_genre g
+        ON p.genre_id = g.genre_id
+
+        LEFT OUTER JOIN prj_platform pf
+        ON p.platform_id = pf.platform_id
+
+        LEFT OUTER JOIN prj_post_img pi
+        ON p.post_no= pi.post_no
+
+        where pi.thumbnail = 'true'
+        or pi.thumbnail is null
+        ORDER BY p.post_no desc
+    </select>
+
+    <select id="findOnePost" resultMap="postMap">
+        SELECT
+        post_no, account, genre_id, ca_id, platform_id,
+        post_title, post_writer, publish_status, publish_cycle,
+        ep_id, cur_ep, total_ep, reg_date, update_date, star_rate, favorite
+        FROM tbl_post
+        WHERE post_no = #{postNo}
+    </select>
+
+    <select id="fineOnePostWithName" resultMap="postWithNameMap">
+        SELECT
+        p.post_no, p.account, p.genre_id, g.genre_name,
+        p.ca_id, p.platform_id, pf.platform_name, pf.platform_bg_color, pf.platform_font_color,
+        p.post_title, p.post_writer, p.publish_status, p.publish_cycle,
+        p.ep_id, p.cur_ep, p.total_ep, p.reg_date, p.update_date, p.star_rate
+        ,pi.file_name, pi.ORIGINAL_FILE_NAME, p.favorite
+        FROM (
+        SELECT *
+        FROM tbl_post
+        WHERE post_no = #{postNo}
+        ) p
+
+        LEFT OUTER JOIN prj_genre g
+        ON p.genre_id = g.genre_id
+
+        LEFT OUTER JOIN prj_platform pf
+        ON p.platform_id = pf.platform_id
+
+        LEFT OUTER JOIN prj_post_img pi
+        ON p.post_no= pi.post_no
+        WHERE pi.thumbnail = 'true'
+        OR pi.thumbnail is null
+    </select>
+
+    <delete id="remove">
+        DELETE FROM tbl_post
+        WHERE post_no = #{postNo}
+    </delete>
+
+    <update id="modify">
+        UPDATE tbl_post
+        SET
+        genre_id=#{genreId},
+        ca_id=#{caId},
+        platform_id=#{platformId},
+        post_title=#{postTitle},
+        post_writer=#{postWriter},
+        publish_status=#{publishStatus},
+        publish_cycle=#{publishCycle},
+        ep_id=#{epId},
+        cur_ep=#{curEp},
+        total_ep=#{totalEp},
+        update_date = current_timestamp,
+        star_rate=#{starRate}
+        WHERE post_no = #{postNo}
+    </update>
+
+    <select id="getTotalCount" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_post
+        WHERE account = #{account}
+    </select>
+
+    <!--  검색과 페이징이 적용된 포스트 찾기 -->
+    <sql id="search">
+        <if test="sTitle != null">and p.post_title like CONCAT('%', #{sTitle}, '%')</if>
+        <if test="sWriter != null">and p.post_writer like concat('%', #{sWriter}, '%' )</if>
+        <if test="sGenre != null">and p.genre_id = #{sGenre}</if>
+        <if test="sPlatform != null">and p.platform_id = #{sPlatform}</if>
+        <if test="sPublishStatus != null">and p.publish_status = #{sPublishStatus}</if>
+        <if test="sStarRate != null">and p.star_rate = #{sStarRate}</if>
+        <if test="sFavorite != null"> and favorite > 0 </if>
+    </sql>
+
+    <select id="searchAllPostWithName" resultMap="postWithNameMap">
+        SELECT
+        p.post_no, p.account, p.genre_id, g.genre_name,
+        p.ca_id, p.platform_id, pf.platform_name, pf.platform_bg_color, pf.platform_font_color,
+        p.post_title, p.post_writer, p.publish_status, p.publish_cycle,
+        p.ep_id, p.cur_ep, p.total_ep, p.reg_date, p.update_date, p.star_rate
+        ,pi.file_name ,pi.ORIGINAL_FILE_NAME, p.favorite
+
+        FROM  (
+                select
+                    *
+                from tbl_post
+                WHERE account = #{account}
+              )p
+
+        LEFT OUTER JOIN ibini.prj_genre g
+        on p.genre_id = g.genre_id
+
+        LEFT OUTER JOIN ibini.prj_platform pf
+        on p.platform_id = pf.platform_id
+
+        LEFT OUTER JOIN prj_post_img pi
+        ON p.post_no= pi.post_no
+
+        where (pi.thumbnail = 'true' or pi.thumbnail is null)
+        <include refid="search"/>
+
+        order by <if test="sFavorite != null"> p.favorite desc, </if> p.post_no desc
+        limit #{start}, #{amount}
+    </select>
+
+    <select id="getTotalCountWithSearch" resultType="Integer">
+        SELECT
+        count(*)
+        FROM ibini.tbl_post p
+        where p.account = #{account}
+        <include refid="search"/>
+    </select>
+
+    <!--    // 특정 장르 아이디를 가진 포스트의 post_no 모두 조회-->
+    <!--       List<Post> getPostByGenreId(int genreId)-->
+    <select id="getPostByGenreId" resultMap="postMap">
+        select * from tbl_post where genre_id = #{genreId}
+    </select>
+<!--    genre count -->
+    <select id="getPostByGenreIdTotal" resultType="int">
+        select COUNT(*) from tbl_post
+        where genre_id = #{genreId}
+        and account = #{account}
+    </select>
+<!--    platform count-->
+    <select id="getPostByPlateIdUseplat" resultType="int">
+        select COUNT(*) from tbl_post
+                 where platform_id = #{platformId}
+        and account = #{account}
+    </select>
+
+    <!--    // 특정 장르 아이디를 가진 포스트의 post_no 모두 조회-->
+    <!--    List<Post> getPostByPlateId(int platformId); -->
+    <select id="getPostByPlateId" resultMap="postMap">
+        select * from tbl_post where platform_id = #{platformId}
+    </select>
+
+
+    <!-- 중복체크 기능 (아이디, 이메일)   -->
+    <select id="isDuplicate" resultType="int">
+        SELECT COUNT(*)
+        FROM tbl_post
+        where account= #{account}
+        <if test="type=='title'">
+            and post_title = #{value}
+        </if>
+            and post_no != #{postNo}
+    </select>
+
+
+<!--    즐겨찾기 등록-->
+<!--    boolean regFavorite(Long postNo);-->
+    <update id="regFavorite">
+        update tbl_post
+        set favorite=(
+                        select max(favorite)+1
+                        from tbl_post
+                        where account= #{account}
+                    )
+        WHERE post_no = #{postNo}
+    </update>
+
+
+<!--    즐겨찾기 삭제-->
+<!--    boolean resetFavorite(Long PostNo);-->
+    <update id="resetFavorite">
+        update tbl_post
+        set favorite=0
+        WHERE post_no = #{postNo}
+    </update>
+
+
+</mapper>

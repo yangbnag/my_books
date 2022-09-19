@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>ibini books</title>
+
+    <!-- reset css -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reset-css@5.0.1/reset.min.css">
+
+    <!-- fontawesome css: https://fontawesome.com -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+
+    <!-- linear icons -->
+    <!-- https://linearicons.com/free#cdn -->
+    <link rel="stylesheet" href="https://cdn.linearicons.com/free/1.0.0/icon-font.min.css">
+
+    <!-- naver font -->
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-square-round.css" rel="stylesheet">
+    <link href="https://hangeul.pstatic.net/hangeul_static/css/nanum-barun-gothic.css" rel="stylesheet">
+
+
+
+    <!-- slick css || https://kenwheeler.github.io/slick/  -->
+    <link rel="stylesheet" href="/main/resources/static/css/slick-1.8.1.css">
+
+    <!-- bootstrap css -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- custom css -->
+    <link rel="stylesheet" href="/main/resources/static/css/common.css">
+    <link rel="stylesheet" href="/main/resources/static/css/post-reg.css">
+
+
+    <!-- jquery -->
+    <script src="/main/resources/static/js/jquery-3.3.1.min.js"></script>
+
+
+    <!-- bootstrap js -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" defer></script>
+
+    <!-- custom js -->
+    <script src="/main/resources/static/js/common.js" defer></script>
+    <script src="/main/resources/static/js/post-reg.js" defer></script>
+
+
+</head>
+
+<body>
+
+
+    <div id="wrap">
+
+
+        <!-- 새 포스트 등록 섹션 -->
+        <section class="post-reg-section">
+            <div class="top-msg">* 필수 입력 사항 <br>선택 사항은 입력하지 않으면 기본값으로 세팅됩니다.(수정 가능)</div>
+            <div class="inner-section">
+                <form id="write-form" action="#" method="post" autocomplete="off" enctype="multipart/form-data">
+
+                    <!-- 히든 : 카테고리 아이디(웹소설 일단 고정)-->
+                    <input type="hidden" name="caId" value="1">
+
+                    <!-- 이미지, 제목, 작가, 별점-->
+                    <div id="reg-1">
+                        <!-- 이미지 -->
+                        <div class="img-wrap">
+                            <div class="img-box">
+                                <span class="box-msg hide">썸네일을 등록해 보세요</span>
+                                <!-- <span class="box-msg hide">썸네일을 등록해 보세요</span> -->
+                                <img class="post-img thumb-img"
+                                    src="https://pbs.twimg.com/media/FagFBNhUsAUzvho?format=jpg&name=4096x4096" alt="">
+                            </div>
+                            <label class="file-box">
+                                <div class="file-box-left">
+                                    파일 선택
+                                </div>
+                                <div class="file-box-right">
+                                    등록된 썸네일이 없습니다.
+                                </div>
+                                <input type="file" name="files" id="ajax-file" class="file-input thumb-input">
+                            </label>
+                        </div>
+
+                        <!-- 제목, 작가, 별점 -->
+                        <div class="tw-wrap">
+                            <div class="span-wrap">
+                                <span class="reg-span">* 책 제목</span>
+                                <span class="explain-span title-msg"></span>
+                            </div>
+                            <input class="white-box" type="text" name="postTitle" placeholder="제목을 입력해 주세요">
+
+                            <div class="span-wrap">
+                                <span class="reg-span">* 작가</span>
+                                <span class="explain-span writer-msg"></span>
+                            </div>
+                            <input class="white-box" type="text" name="postWriter" placeholder="작가를 입력해 주세요">
+
+                            <div class="span-wrap">
+                                <span class="reg-span">별점</span>
+                                <span class="explain-span star-msg"></span>
+                            </div>
+                            <input class="white-box" type="text" name="starRate" placeholder="1에서 9 사이의 정수를 입력해 주세요"
+                                maxlength="1"
+                                oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" />
+                        </div>
+                    </div> <!-- // end reg-1 -->
+
+
+                    <!-- 플랫폼, 장르 -->
+                    <div id="reg-2">
+                        <div class="plge-wrap">
+
+                            <!-- 플랫폼 영역 -->
+                            <div class="span-wrap">
+                                <span class="reg-span">플랫폼</span>
+                                <span class="explain-span">새 플랫폼을 추가하려면 버튼을 눌러주세요 ↓</span>
+                            </div>
+
+                            <div class="select-add-wrap">
+                                <!-- 플랫폼 선택 -->
+                                <div class="divided-select">
+                                    <select class="white-box" name="platformId">
+                                        <option value="0">플랫폼을 선택하세요</option>
+                                        <option value="1">카카오페이지</option>
+                                        <option value="2">네이버시리즈</option>
+                                        <option value="3">리디북스</option>
+                                        <option value="4">다음웹툰</option>
+                                        <option value="5">네이버웹툰</option>
+                                    </select>
+                                </div>
+
+                                <!-- 새 플랫폼 추가 -->
+                                <div class="divided-input">
+                                    <input class="white-box hide" type="text" placeholder="플랫폼 이름을 입력해 주세요">
+                                </div>
+                                <div class="divided-btn">
+                                    <div class="white-box icon-box ">
+                                        <span class="fas fa-plus-square"></span>
+                                    </div>
+                                </div>
+                            </div> <!-- // end (platform) select-add-wrap -->
+
+                            <!-- 장르 영역 -->
+                            <div class="span-wrap">
+                                <span class="reg-span">장르</span>
+                                <span class="explain-span">새 장르를 추가하려면 버튼을 눌러주세요 ↓</span>
+                            </div>
+
+                            <div class="select-add-wrap">
+                                <!-- 장르 선택 -->
+                                <div class="divided-select">
+                                    <select class="white-box" name="genreId" id="">
+                                        <option value="0">장르를 선택하세요</option>
+                                        <option value="1">판타지</option>
+                                        <option value="2">로맨스</option>
+                                        <option value="3">무협</option>
+                                        <option value="4">아포칼립스</option>
+                                        <option value="5">공포</option>
+                                    </select>
+                                </div>
+
+                                <!-- 새 장르 추가 -->
+                                <div class="divided-input">
+                                    <input class="white-box hide" type="text" placeholder="장르명을 입력해 주세요">
+                                </div>
+                                <div class="divided-btn">
+                                    <div class="white-box icon-box ">
+                                        <span class="fas fa-plus-square"></span>
+                                    </div>
+                                </div>
+                            </div> <!-- // end (platform) select-add-wrap -->
+                        </div> <!-- // end plge-wrap -->
+                    </div> <!-- // end reg-2 -->
+
+
+                    <!-- 연재 상태, 연재 요일 -->
+                    <div id="reg-3">
+                        <div class="span-wrap">
+                            <span class="reg-span">연재 상태</span>
+                        </div>
+                        <div class="radio-wrap pub-btn-group">
+                            <label class="white-box radio-item checked">연재
+                                <input class="ep-radio" type="radio" name="publishStatus" value="1" checked>
+                            </label>
+                            <label class="white-box radio-item">휴재
+                                <input class="ep-radio" type="radio" name="publishStatus" value="2">
+                            </label>
+                            <label class="white-box radio-item">완결
+                                <input class="ep-radio" type="radio" name="publishStatus" value="3">
+                            </label>
+                        </div>
+                        <div class="span-wrap">
+                            <span class="reg-span">연재 일시</span>
+                            <span class="explain-span ep-msg"></span>
+                        </div>
+                        <input class="white-box" type="text" name="publishCycle" placeholder="예시) 월, 수, 금 10시">
+                    </div> <!-- // end reg-3 -->
+
+
+                    <!-- 회차 구분, 현재 회차, 현재 페이지 -->
+                    <div id="reg-4">
+                        <div class="span-wrap">
+                            <span class="reg-span">회차 구분</span>
+                            <span class="explain-span ep-msg"></span>
+                        </div>
+
+                        <div class="radio-wrap ep-btn-group">
+                            <label class="white-box radio-item checked">
+                                <span>회차(화)</span>
+                                <input class="ep-radio" type="radio" name="epId" value="0" checked>
+                            </label>
+                            <label class="white-box radio-item">
+                                <span>페이지(p)</span>
+                                <input class="ep-radio" type="radio" name="epId" value="1">
+                            </label>
+                            <label class="white-box radio-item">
+                                <span>권수</span>
+                                <input class="ep-radio" type="radio" name="epId" value="2">
+                            </label>
+                            <label class="white-box radio-item">
+                                <span>퍼센트(%)</span>
+                                <input class="ep-radio" type="radio" name="epId" value="3">
+                            </label>
+                        </div>
+
+                        <div class="ep-wrap">
+                            <div class="ep-input-wrap">
+                                <span class="reg-span">현재 회차</span> <!-- 회차는 ${p.epName}으로-->
+                                <input class="white-box" type="text" name="curEp" placeholder="0~99999 사이 숫자"
+                                    maxlength="5"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" />
+                            </div>
+                            <div class="ep-input-wrap">
+                                <span class="reg-span">전체 회차</span> <!-- 회차는 ${p.epName}으로-->
+                                <input class="white-box" type="text" name="totalEp" placeholder="0~99999 사이 숫자"
+                                    maxlength="5"
+                                    oninput="this.value = this.value.replace(/[^0-9]/g, '').replace(/(\..*)\./g, '$1');" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="reg-5">
+                        <div class="span-wrap">
+                            <span class="reg-span">해시태그</span>
+                            <span class="explain-span">[ 각 해시태그는 #를 기준으로 구별됩니다. ]</span>
+                        </div>
+                        <input class="white-box" type="text" name="tagName" placeholder="예시) #태그1 #태그_2">
+                    </div>
+
+                    <div id="reg-6">
+                        <div class="span-wrap">
+                            <span class="reg-span">이미지 첨부하기</span>
+                            <span class="explain-span">[ 첨부 이미지는 5개까지 업로드 가능합니다. ]</span>
+                        </div>
+                        <label class="file-box">
+                            <div class="file-box-left">
+                                파일 선택
+                            </div>
+                            <div class="file-box-right">
+                                첨부 이미지 4개
+                            </div>
+                            <input type="file" name="files" id="ajax-file-multi" class="file-input imgs-input" multiple>
+                        </label>
+                        <div class="uploaded-list">
+
+                            <div class="upload-img-box">
+                                <img class="upload-img"
+                                    src="https://pbs.twimg.com/media/FbQJPxYUcAI11FU?format=jpg&name=large" alt="111">
+                                <span class="fas fa-times-circle upload-cancel-btn"></span>
+                                <input type="hidden" name="filNames"
+                                    value="https://pbs.twimg.com/media/FbQJPxYUcAI11FU?format=jpg&name=large">
+                            </div>
+                            
+                        </div>
+
+                    </div>
+
+
+                    <div id="reg-btn">
+                        <button id="post-reg-btn" class="white-box">등록</button>
+                    </div>
+
+
+
+
+
+
+
+                </form> <!-- // end write-form -->
+            </div> <!-- // end inner-section -->
+        </section> <!-- // end section -->
+
+    </div> <!-- end wrap -->
+
+
+
+    <script>
+        // start jQuery
+        $(document).ready(function () {
+            // jQueryTagTest("태그 잡기 테스트", $('h1'));
+
+            // 입력창 키업 이벤트
+            const $form = $('#write-form');
+            // console.log($form);
+            $form.on({
+                keydown: function (e) {
+                    return checkKeydown(e);
+                },
+                keyup: function (e) {
+                    checkKeyup(e);
+                }
+            });
+
+
+            // 포스트 입력 폼 제출 이벤트
+            const $regBtn = $('#post-reg-btn');
+            // jQueryTagTest($regBtn, "태그 잡기 테스트");
+            $regBtn.click(e => {
+                e.preventDefault();
+                if (validateFormValue()) {
+                    // $('#post-reg-form').submit();
+                }
+            })
+
+            //첨부 이미지 삭제 이벤트
+            // const $uploadImgBox = $('.upload-img-box');
+            // $uploadImgBox.click('e', function (e) {
+            //     $target = e.target;
+
+            //     if (!$target.classList.contains('upload-cancel-btn')) {
+            //         return;
+            //     }
+            //     // 타깃 부모 노드 삭제(랜더링 이미지, 히든인풋 포함)
+            //     $target.parentElement.remove();
+            //     // 파일 선택창 메세지 다시 세팅
+            //     setUploadCount()
+            // })
+
+            // // 최하단 파일 선택창 메세지 세팅해주는 함수
+            // function setUploadCount() {
+            //     const upImgCnt = $('.upload-img').length;
+            //     console.log(upImgCnt);
+            //     if (upImgCnt === 0) {
+            //         $('.file-box-right').text("현재 첨부한 이미지가 없습니다.");
+            //     } else {
+            //         $('.file-box-right').text("첨부 이미지 " + upImgCnt + "개");
+            //     };
+            // }
+
+            
+            // 첨부 이미지 삭제 이벤트
+            $('.uploaded-list').click(delUploadImg);
+
+
+
+
+
+
+        });
+        // end jQuery
+    </script>
+
+
+</body>
+
+</html>

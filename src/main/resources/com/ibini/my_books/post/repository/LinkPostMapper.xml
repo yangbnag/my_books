@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ibini.my_books.post.repository.LinkPostMapper">
+
+    <resultMap id="linkPostMap" type="com.ibini.my_books.post.domain.LinkPost">
+        <result property="linkId" column="link_id"/>
+        <result property="rootPostNo" column="root_post_no"/>
+        <result property="linkPostNo" column="link_post_no"/>
+    </resultMap>
+
+    <resultMap id="postWithNameMap" type="com.ibini.my_books.post.dto.PostWithName">
+        <result property="postNo" column="post_no"/>
+        <result property="genreId" column="genre_id"/>
+        <result property="caId" column="ca_id"/>
+        <result property="platformId" column="platform_id"/>
+        <result property="postTitle" column="post_title"/>
+        <result property="postWriter" column="post_writer"/>
+        <result property="publishStatus" column="publish_status"/>
+        <result property="publishCycle" column="publish_cycle"/>
+        <result property="epId" column="ep_id"/>
+        <result property="curEp" column="cur_ep"/>
+        <result property="totalEp" column="total_ep"/>
+        <result property="regDate" column="reg_date"/>
+        <result property="updateDate" column="update_date"/>
+        <result property="starRate" column="star_rate"/>
+
+        <result property="genreName" column="genre_name"/>
+
+        <result property="platformName" column="platform_name"/>
+        <result property="platformBgColor" column="platform_bg_color"/>
+        <result property="platformFontColor" column="platform_font_color"/>
+
+        <result property="thumbImg" column="file_name"/>
+        <result property="originalThumbName" column="ORIGINAL_FILE_NAME"/>
+    </resultMap>
+
+    <insert id="connectPost">
+        insert into prj_link_post
+            (link_id, root_post_no, link_post_no)
+        VALUES
+            (#{linkId}, #{rootPostNo}, #{linkPostNo})
+    </insert>
+
+    <delete id="disconnectPost">
+        DELETE FROM prj_link_post
+        WHERE link_id = #{linkId}
+    </delete>
+
+    <select id="getLinkList" resultMap="linkPostMap">
+        select
+            link_id, root_post_no, link_post_no
+        from prj_link_post
+        where root_post_no=#{rootPostNo}
+        order by link_post_no desc
+    </select>
+    
+    <select id="getLinkDTOList" resultMap="postWithNameMap">
+        select
+            p.post_no
+            , p.account, p.ca_id, p.post_title, p.post_writer
+            , p.genre_id, g.genre_name
+            , p.platform_id, pf.platform_name, pf.platform_bg_color, pf.platform_font_color
+            , p.publish_status, p.publish_cycle
+            , p.ep_id, p.cur_ep, p.total_ep
+            , p.reg_date, p.update_date, p.star_rate
+        from (
+                select
+                *
+                from prj_link_post
+                where root_post_no = #{rootPostNo}
+            ) a
+        LEFT OUTER JOIN tbl_post p
+            ON a.link_post_no = p.post_no
+        LEFT OUTER JOIN prj_genre g
+            ON p.genre_id = g.genre_id
+        LEFT OUTER JOIN prj_platform pf
+            ON p.platform_id = pf.platform_id
+        order by post_no desc
+    </select>
+
+    <select id="getCount" resultType="int">
+        SELECT COUNT(*)
+        from prj_link_post
+        where root_post_no=#{rootPostNo}
+    </select>
+
+    <select id="isLinked" resultType="int">
+        SELECT
+        COUNT(*)
+        from prj_link_post
+        where root_post_no = #{rootPostNo}
+            and link_post_no = #{linkPostNo}
+    </select>
+
+    <sql id="search">
+        <if test="sTitle != null">and p.post_title like CONCAT('%', #{sTitle}, '%')</if>
+        <if test="sWriter != null">and p.post_writer like concat('%', #{sWriter}, '%' )</if>
+    </sql>
+
+    <select id="getSearchList" resultMap="postWithNameMap">
+        SELECT
+        p.post_no, p.post_title , p.post_writer
+        , p.genre_id, g.genre_name
+        , p.platform_id, pf.platform_name, pf.platform_bg_color, pf.platform_font_color
+        , p.publish_status , p.publish_cycle
+        , p.cur_ep , p.total_ep,  p.update_date
+        FROM ibini.tbl_post p
+        left outer join ibini.prj_genre g
+        on p.genre_id = g.genre_id
+        left outer join ibini.prj_platform pf
+        on p.platform_id = pf.platform_id
+        left outer join (
+                        select * from prj_link_post where root_post_no = #{rootPostNo}
+                        ) l
+        on p.post_no = l.link_post_no
+        where p.account = #{account}
+        and p.post_no != #{rootPostNo}
+        and l.link_post_no is null
+        <include refid="search"/>
+        order by post_no desc
+        <!--        limit #{start}, #{amount}-->
+    </select>
+
+    <select id="getLinkForRemove" resultMap="linkPostMap">
+        select *
+        from ibini.prj_link_post
+        where link_id like concat('%', #{rootPostNo}, '%')
+    </select>
+
+</mapper>

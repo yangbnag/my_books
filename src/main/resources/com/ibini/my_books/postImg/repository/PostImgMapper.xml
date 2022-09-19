@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ibini.my_books.postImg.repository.PostImgMapper">
+
+    <resultMap id="postImgMap" type="com.ibini.my_books.postImg.domain.PostImg">
+        <result property="fileName" column="file_name"/>
+        <result property="postNo" column="post_no"/>
+        <result property="originalFileName" column="original_file_name"/>
+        <result property="regDate" column="reg_date"/>
+    </resultMap>
+
+    <insert id="addFile">
+        INSERT INTO prj_post_img
+            (
+                file_name,
+                post_no,
+                account,
+                original_file_name
+                <if test="thumbnail">, thumbnail</if>
+            )
+        VALUES
+            (
+                #{fileName},
+                <choose>
+                    <when test="postNo != null">
+                        #{postNo},
+                    </when>
+                    <otherwise>
+                        LAST_INSERT_ID(),
+                    </otherwise>
+                </choose>
+                #{account},
+                #{originalFileName}
+                <if test="thumbnail">, #{thumbnail}</if>
+            )
+    </insert>
+
+    <select id="findFileNames" resultType="string">
+        SELECT file_name
+        FROM prj_post_img
+        WHERE post_no = #{postNo}
+        ORDER BY thumbnail desc
+    </select>
+
+    <select id="findFiles" resultMap="postImgMap">
+        select
+        file_name, post_no, original_file_name, thumbnail
+        FROM prj_post_img
+        WHERE post_no = #{postNo}
+        ORDER BY thumbnail desc
+    </select>
+
+    <select id="findThumbs" resultMap="postImgMap">
+        select * from PRJ_POST_IMG
+        where THUMBNAIL='true'
+    </select>
+
+    <!--   post_no으로 postImg DB에서 삭제-->
+    <delete id="removeByPostNo">
+        DELETE FROM prj_post_img
+        WHERE post_no = #{postNo}
+    </delete>
+
+    <!--    fileName 으로 postImg DB에서 삭제-->
+    <delete id="removeByName">
+        DELETE FROM prj_post_img
+        WHERE file_name = #{fileName}
+    </delete>
+
+    <!--  포스트에 썸네일이 있으면 수정, 없으면 새로 저장  -->
+<!--    <update id="mergeThumb">-->
+<!--        merge into prj_post_img a-->
+<!--        using dual-->
+<!--        on (post_no=${postNo} and thumbnail='true')-->
+<!--        when matched then-->
+<!--            UPDATE-->
+<!--            set file_name = #{fileName}, reg_date = SYSDATE-->
+<!--        when not MATCHED then-->
+<!--           insert (a.file_name, a.post_no, a.account, a.original_file_name, a.thumbnail)-->
+<!--           VALUES (#{fileName}, #{postNo}, #{account}, #{originalFileName}, 'true')-->
+<!--    </update>-->
+
+</mapper>
